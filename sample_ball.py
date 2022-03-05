@@ -125,9 +125,12 @@ class Ball(pygame.sprite.Sprite):
                 self.score.add_score(self.hit * 10)   # 衝突回数に応じてスコア加点
                 Block.num_blocks -= 1  # ブロック数を減らす
 
-                # 最後のブロックの場合
+                # 最後のブロックの場合ゲームクリア
                 if Block.num_blocks == 0:
-                    self.gameclear_sound.play()
+                    self.gameclear_sound.play()  # 効果音を鳴らす
+                    # ボールの動きを止める
+                    self.dx = 0
+                    self.dy = 0
 
 # ブロックのクラス
 class Block(pygame.sprite.Sprite):
