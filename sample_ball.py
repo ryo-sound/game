@@ -141,11 +141,11 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode(SCREEN.size)
     Ball.paddle_sound = pygame.mixer.Sound(
-        "C:/github/sample/python/pygame/breakout/flashing.wav")    # パドルにボールが衝突した時の効果音取得
+        "./resource/sound/flashing.wav")    # パドルにボールが衝突した時の効果音取得
     Ball.block_sound = pygame.mixer.Sound(
-        "C:/github/sample/python/pygame/breakout/flying_pan.wav")    # ブロックにボールが衝突した時の効果音取得
+        "./resource/sound/flying_pan.wav")    # ブロックにボールが衝突した時の効果音取得
     Ball.gameover_sound = pygame.mixer.Sound(
-        "C:/github/sample/python/pygame/breakout/badend1.wav")    # ゲームオーバー時の効果音取得
+        "./resource/sound/badend1.wav")    # ゲームオーバー時の効果音取得
     # 描画用のスプライトグループ
     group = pygame.sprite.RenderUpdates()  
 
@@ -158,18 +158,18 @@ def main():
     Block.containers = group, blocks
 
     # パドルの作成
-    paddle = Paddle("C:/github/sample/python/pygame/breakout/paddle.png")
+    paddle = Paddle("./resource/image/paddle.png")
 
     # ブロックの作成(14*10)
     for x in range(1, 15):
         for y in range(1, 11):
-            Block("C:/github/sample/python/pygame/breakout/block.png", x, y)
+            Block("./resource/image/block.png", x, y)
 
     # スコアを画面(10, 10)に表示
     score = Score(10, 10)    
 
     # ボールを作成
-    Ball("C:/github/sample/python/pygame/breakout/ball.png",
+    Ball("./resource/image/ball.png",
          paddle, blocks, score, 5, 135, 45)
     
     clock = pygame.time.Clock()
