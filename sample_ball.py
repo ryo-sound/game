@@ -9,6 +9,18 @@ import pygame.mixer
 # 画面サイズ
 SCREEN = Rect(0, 0, 400, 400)
 
+# 画像のパス
+IMAGE_DIR = './resource/image'
+PADDLE_IMAGE = f'{IMAGE_DIR}/paddle.png'
+BALL_IMAGE = f'{IMAGE_DIR}/ball.png'
+BLOCK_IMAGE = f'{IMAGE_DIR}/block.png'
+
+# サウンドのパス
+SOUND_DIR = './resource/sound'
+PADDLE_BUMP_SOUND = f'{SOUND_DIR}/flashing.wav'   # パドルにボールが衝突した時の効果音
+BLOCK_BUMP_SOUND = f'{SOUND_DIR}/flying_pan.wav'  # ブロックにボールが衝突した時の効果音
+GAMEOVER_SOUND = f'{SOUND_DIR}/badend1.wav'       # ゲームオーバー時の効果音
+
 # バドルのクラス
 class Paddle(pygame.sprite.Sprite):
     # コンストラクタ（初期化メソッド）
@@ -140,12 +152,9 @@ class Score():
 def main():
     pygame.init()
     screen = pygame.display.set_mode(SCREEN.size)
-    Ball.paddle_sound = pygame.mixer.Sound(
-        "./resource/sound/flashing.wav")    # パドルにボールが衝突した時の効果音取得
-    Ball.block_sound = pygame.mixer.Sound(
-        "./resource/sound/flying_pan.wav")    # ブロックにボールが衝突した時の効果音取得
-    Ball.gameover_sound = pygame.mixer.Sound(
-        "./resource/sound/badend1.wav")    # ゲームオーバー時の効果音取得
+    Ball.paddle_sound = pygame.mixer.Sound(PADDLE_BUMP_SOUND)  # パドルにボールが衝突した時の効果音取得
+    Ball.block_sound = pygame.mixer.Sound(BLOCK_BUMP_SOUND)    # ブロックにボールが衝突した時の効果音取得
+    Ball.gameover_sound = pygame.mixer.Sound(GAMEOVER_SOUND)   # ゲームオーバー時の効果音取得
     # 描画用のスプライトグループ
     group = pygame.sprite.RenderUpdates()  
 
@@ -158,19 +167,18 @@ def main():
     Block.containers = group, blocks
 
     # パドルの作成
-    paddle = Paddle("./resource/image/paddle.png")
+    paddle = Paddle(PADDLE_IMAGE)
 
     # ブロックの作成(14*10)
     for x in range(1, 15):
         for y in range(1, 11):
-            Block("./resource/image/block.png", x, y)
+            Block(BLOCK_IMAGE, x, y)
 
     # スコアを画面(10, 10)に表示
     score = Score(10, 10)    
 
     # ボールを作成
-    Ball("./resource/image/ball.png",
-         paddle, blocks, score, 5, 135, 45)
+    Ball(BALL_IMAGE, paddle, blocks, score, 5, 135, 45)
     
     clock = pygame.time.Clock()
 
